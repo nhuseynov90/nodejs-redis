@@ -4,17 +4,22 @@ services:
   redis: 
     container_name: redis-server
     image: 'redis:latest'
+    networks:
+      - redis-nodejs
 
   node-app:
     container_name: node-app1
     build: . 
     ports: 
-      - "80": "8081"
+      - 80:8081
+    networks:
+      - redis-nodejs
+
 networks:
   redis-nodejs:
-    driver: brige 
+    driver: bridge 
     name: redis-nodejs 
     ipam:
       config: 
-        - subnet: 172.19.0.0/26
+        - subnet: 172.20.0.0/26
 
